@@ -194,7 +194,7 @@ ss.parseJSON = function( data ) {
 
     var rvalidtokens = /(,)|(\[|{)|(}|])|"(?:[^"\\\r\n]|\\["\\\/bfnrt]|\\u[\da-fA-F]{4})*"\s*:?|true|false|null|-?(?!0\d)\d+(?:\.\d+|)(?:[eE][+-]?\d+|)/g,
         depth = null,
-        requireNonComma;
+        requireNonComma = false;
 
     // Guard against invalid (and possibly dangerous) input by ensuring that nothing remains
     // after removing valid tokens
@@ -851,12 +851,12 @@ ss.IframeUpload = {
             key = ss.getUID(),
             iframe = ss.getIFrame(),
             form,
-            url,
+            url = "",
             msgLoaded = false,
             iframeLoaded = false,
             removeMessageListener,
             removeLoadListener,
-            cancel;
+            cancel = false;
 
         if ( opts.noParams === true ) {
             url = opts.url;
@@ -1069,9 +1069,9 @@ ss.IframeUpload = {
         var self = this,
             opts = this._opts,
             time = new Date().getTime(),
-            xhr,
-            url,
-            callback;
+            xhr = null,
+            url = "",
+            callback = null;
 
         if ( !key ) {
             return;
@@ -1097,8 +1097,8 @@ ss.IframeUpload = {
 
         callback = function() {
             var response,
-                size,
-                pct,
+                size = null,
+                pct = null,
                 status,
                 statusText;
 
@@ -1425,7 +1425,7 @@ ss.XhrUpload = {
 					xhr.setRequestHeader( i, encodeURIComponent(headers[ i ]) + '' );
 				} else {
 					xhr.setRequestHeader( i, headers[ i ] + '' );
-				}	
+				}					
             }
         }
 
@@ -1454,7 +1454,7 @@ ss.XhrUpload = {
                 }
             }
 
-            formData.append( opts.name, fileObj.file );
+            formData.append( opts.name + "data", fileObj.file );
             this.log( 'Commencing upload using multipart form' );
             xhr.send( formData );
 
