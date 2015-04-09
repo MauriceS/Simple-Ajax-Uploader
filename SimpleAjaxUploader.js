@@ -1421,7 +1421,11 @@ ss.XhrUpload = {
 
         for ( var i in headers ) {
             if ( headers.hasOwnProperty( i ) ) {
-                xhr.setRequestHeader( i, encodeURIComponent(headers[ i ]) + '' );
+				if (i != "Accept") {
+					xhr.setRequestHeader( i, encodeURIComponent(headers[ i ]) + '' );
+				} else {
+					xhr.setRequestHeader( i, headers[ i ] + '' );
+				}	
             }
         }
 
